@@ -19,6 +19,13 @@ public class Node
 			for(int i=0;i<=node_data.total_num;i++){
 						threads.add(new ConnectionThread(i,node_data));
 						threads.get(i).start();	
+					}
+			node_data.rn = new int[node_data.total_num+1];
+			node_data.ln = new int[node_data.total_num+1];
+			for(int i=0;i<=node_data.total_num;i++)
+			{
+				node_data.rn[i]=0;
+				node_data.ln[i]=0;
 			}
 
 			Scanner sc = new Scanner(System.in);
@@ -28,9 +35,10 @@ public class Node
 				int input = sc.nextInt();
 				if(input==1){
 					System.out.println("input ok");
+					node_data.rn[node_data.node_num]++;
 						for(int i=1;i<=node_data.total_num;i++){
 								if(i!=node_data.node_num){
-									threads.get(i).request();								
+									threads.get(i).request(node_data.rn[node_data.node_num]);								
 								}					
 						}
 					}
