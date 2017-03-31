@@ -15,7 +15,11 @@ public class ConnectionThread extends Thread{
 	public ConnectionThread(int i, Node_data node_data){
 		// keeping token initially with node 1
 		this.node_data=node_data;
+<<<<<<< HEAD
 		this.node_connected_num=i;
+=======
+		node_connected_num=i;
+>>>>>>> c8c427e38738c76433df4b817fa0726b1f923796
 		if(node_data.node_num==1)
 		{
 			node_data.has_token=true;
@@ -37,7 +41,11 @@ public class ConnectionThread extends Thread{
 				port_num=node_data.node_num*2000+node_connected_num;
 
         		try {
+<<<<<<< HEAD
         			System.out.println("Port_number for connecting = "+port_num);
+=======
+        			System.out.println("Port_number "+port_num);
+>>>>>>> c8c427e38738c76433df4b817fa0726b1f923796
             	serverSocket = new ServerSocket(port_num);
             	socket = serverSocket.accept();
         		
@@ -48,6 +56,7 @@ public class ConnectionThread extends Thread{
 			while(true)
 			{
 				String data=dis.readUTF();
+<<<<<<< HEAD
 				System.out.println("data received "+data);
 				// data has request for token
 				if(data.indexOf("+")!=-1)
@@ -68,6 +77,33 @@ public class ConnectionThread extends Thread{
 					String data2=dis.readUTF();
 					System.out.println("data2 received  "+data2);
 					node_data.has_token=true;
+=======
+				System.out.println(data);
+				// data has request for token
+				if(data.indexOf("+")!=-1)
+				{
+					// return him token
+					String[] parts = data.split("\\+");
+					System.out.println(parts[0] + "   " + parts[1]);
+					int part1 = Integer.parseInt(parts[0]); // node_num
+					int part2 = Integer.parseInt(parts[1]); // rn
+					node_data.rn[part1]=Math.max(node_data.rn[part1],part2);
+					if(node_data.has_token)
+					{
+						//give him token based on following condition
+						if(node_data.rn[part1]==node_data.ln[part1]+1)
+						{
+							// send token to it
+							System.out.println("Sending token to "+part1);
+							dout.writeUTF(Arrays.toString(node_data.ln));
+							this.node_data.has_token=false;
+						}
+					}
+				}
+				else
+				{
+					this.node_data.has_token=true;
+>>>>>>> c8c427e38738c76433df4b817fa0726b1f923796
 					String arr = data;
 					String[] items = arr.replaceAll("\\[", "").replaceAll("\\]", "").replaceAll("\\s", "").split(",");
 
@@ -79,6 +115,7 @@ public class ConnectionThread extends Thread{
     				} catch (NumberFormatException nfe) {
         			//NOTE: write something here if you need to recover from formatting errors
     				};
+<<<<<<< HEAD
     				// take data of queue
 				}
 				node_data.queue.fromString(data2);
@@ -86,6 +123,9 @@ public class ConnectionThread extends Thread{
 				{
 					request(node_data.rn[node_data.node_num]);
 				}
+=======
+				}
+>>>>>>> c8c427e38738c76433df4b817fa0726b1f923796
 				}
 			}
 				} catch (Exception e) {
@@ -97,7 +137,11 @@ public class ConnectionThread extends Thread{
 			{
 				port_num=node_data.node_num+node_connected_num*2000;
 				try{
+<<<<<<< HEAD
 					System.out.println("Port_number for connecting = "+port_num);
+=======
+					System.out.println("Port_number "+port_num);
+>>>>>>> c8c427e38738c76433df4b817fa0726b1f923796
 					socket=new Socket(InetAddress.getLocalHost(),port_num);
 				
 				dout=new DataOutputStream(socket.getOutputStream());
@@ -106,19 +150,40 @@ public class ConnectionThread extends Thread{
 				while(true)
 				{
 				String data=dis.readUTF();
+<<<<<<< HEAD
 				System.out.println("data received " + data);
 				// data has request for token
 				if(data.indexOf("+")!=-1)
 				{
 						// return him token
+=======
+				System.out.println(data);
+				// data has request for token
+				if(data.indexOf("+")!=-1)
+				{
+					// return him token
+>>>>>>> c8c427e38738c76433df4b817fa0726b1f923796
 					String[] parts = data.split("\\+");
 					System.out.println(parts[0] + "   " + parts[1]);
 					int part1 = Integer.parseInt(parts[0]); // node_num
 					int part2 = Integer.parseInt(parts[1]); // rn
 					node_data.rn[part1]=Math.max(node_data.rn[part1],part2);
+<<<<<<< HEAD
 					if(node_data.has_token==true && node_data.rn[part1]==node_data.ln[part1]+1)
 					{
 						sendToken(part1);
+=======
+					if(node_data.has_token)
+					{
+						//give him token based on following condition
+						if(node_data.rn[part1]==node_data.ln[part1]+1)
+						{
+							// send token to it
+							System.out.println("Sending token to "+part1);
+							dout.writeUTF(Arrays.toString(node_data.ln));
+							this.node_data.has_token=false;
+						}
+>>>>>>> c8c427e38738c76433df4b817fa0726b1f923796
 					}
 				}
 				else
@@ -137,6 +202,7 @@ public class ConnectionThread extends Thread{
     				} catch (NumberFormatException nfe) {
         			//NOTE: write something here if you need to recover from formatting errors
     				};
+<<<<<<< HEAD
     				// take data of queue
 				}
 				System.out.println("I am okay");
@@ -147,6 +213,14 @@ public class ConnectionThread extends Thread{
 				}
 				}
 			}
+=======
+				}
+					if(node_data.rn[node_data.node_num]==node_data.ln[node_data.node_num]+1)
+					{
+						request(node_data.rn[node_data.node_num]);
+					}
+				}
+>>>>>>> c8c427e38738c76433df4b817fa0726b1f923796
 				}catch(Exception e){
 					
 					System.out.println("exception2 here");
@@ -162,6 +236,7 @@ public class ConnectionThread extends Thread{
     {
     	if(node_data.has_token)
     	{
+<<<<<<< HEAD
     			System.out.println("Executing CS for "+ node_data.node_num);
     			node_data.want_to_use=false;
     			// updating ln of token after execution
@@ -182,11 +257,20 @@ public class ConnectionThread extends Thread{
     				number=node_data.queue.dequeue();
     				sendToken(number);
     			}
+=======
+    			System.out.println("CS for "+ node_data.node_num);
+    			// updating ln of token after execution
+    			node_data.ln[node_data.node_num]=node_data.rn[node_data.node_num];
+>>>>>>> c8c427e38738c76433df4b817fa0726b1f923796
     	}
     	else
     	{
     		try{
+<<<<<<< HEAD
     			// request format is node_num+rn[node_num]
+=======
+    			// request format is "node_num+rn[node_num]"
+>>>>>>> c8c427e38738c76433df4b817fa0726b1f923796
     			System.out.println("writing request for token from "+node_data.node_num);
     			dout.writeUTF(node_data.node_num+"+"+num);
     		} catch (IOException e) {

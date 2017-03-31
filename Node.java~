@@ -22,8 +22,12 @@ public class Node
 					}
 			node_data.rn = new int[node_data.total_num+1];
 			node_data.ln = new int[node_data.total_num+1];
+<<<<<<< HEAD
 			node_data.want_to_use=false;
 			for(int i=0;i<=node_data.total_num;i++)
+=======
+			for(i=0;i<=node_data.total_num;i++)
+>>>>>>> c8c427e38738c76433df4b817fa0726b1f923796
 			{
 				node_data.rn[i]=0;
 				node_data.ln[i]=0;
@@ -40,7 +44,10 @@ public class Node
 				if(input==1){
 					System.out.println("input ok");
 					node_data.rn[node_data.node_num]++;
+<<<<<<< HEAD
 					// Send request to all nodes to get token
+=======
+>>>>>>> c8c427e38738c76433df4b817fa0726b1f923796
 						for(int i=1;i<=node_data.total_num;i++){
 								if(i!=node_data.node_num){
 									threads.get(i).request(node_data.rn[node_data.node_num]);								

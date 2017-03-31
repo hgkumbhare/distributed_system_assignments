@@ -10,5 +10,8 @@ public class Node_data{
 	
 	// token structure has only ln
 	public int[] ln;
+<<<<<<< HEAD
 	public QueueArray queue;
+=======
+>>>>>>> c8c427e38738c76433df4b817fa0726b1f923796
 }
