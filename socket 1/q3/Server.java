@@ -1,0 +1,31 @@
+import java.io.*;
+import java.net.*;
+import java.util.Date;
+
+public class Server {
+public static void main(String[] args){
+try{
+ServerSocket ss=new ServerSocket(6668);
+Socket s=ss.accept();//establishes connection 
+
+
+DataInputStream dis=new DataInputStream(s.getInputStream());
+String	str=(String)dis.readUTF();
+System.out.println("message from client= "+str);
+
+
+DataOutputStream dout=new DataOutputStream(s.getOutputStream());
+
+StringBuilder myName = new StringBuilder(str);
+myName.setCharAt(4, 'x');
+
+dout.writeUTF(myName.toString());
+
+
+dout.flush();
+dout.close();
+ss.close();
+
+}catch(Exception e){System.out.println(e);}
+}
+}

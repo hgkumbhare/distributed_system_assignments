@@ -1,0 +1,32 @@
+import java.io.*;
+import java.net.*;
+import java.util.Date;
+
+public class Server {
+public static void main(String[] args){
+try{
+ServerSocket ss=new ServerSocket(6666);
+Socket s=ss.accept();//establishes connection 
+
+//DataInputStream dis=new DataInputStream(s.getInputStream());
+
+//String	str=(String)dis.readUTF();
+
+Date d1 = new Date();
+SimpleDateFormat df = new SimpleDateFormat("MM/dd/YYYY HH:mm a");
+String formattedDate = df.format(d1);
+
+DataOutputStream dout=new DataOutputStream(s.getOutputStream());
+
+dout.writeUTF(formattedDate);
+dout.flush();
+
+dout.close();
+
+//System.out.println("message= "+str + formattedDate);
+
+ss.close();
+
+}catch(Exception e){System.out.println(e);}
+}
+}

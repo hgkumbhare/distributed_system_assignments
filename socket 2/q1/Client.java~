@@ -1,0 +1,25 @@
+import java.io.*;
+import java.net.*;
+
+public class Client {
+public static void main(String[] args) {
+try{	
+Socket s=new Socket("localhost",6666);
+
+DataOutputStream dout=new DataOutputStream(s.getOutputStream());
+DataInputStream dis=new DataInputStream(s.getInputStream());
+
+
+while(true)
+{
+	dout.writeUTF("10");
+	dout.writeUTF("15");
+
+	String	str=(String)dis.readUTF();
+	System.out.println("message from server stating result of calculations = "+str);
+	s.close();
+
+	}catch(Exception e){System.out.println(e);}
+	}
+}
+}
